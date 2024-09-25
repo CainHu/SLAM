@@ -619,8 +619,6 @@ unsigned long slam::compute_essential_5pts(const vector<pair<const Vec3*, const 
     unsigned long num_inliers_vec[2] = {0, 0};
     vector<bool> is_outliers_vec[2] {vector<bool>(num_points, false), vector<bool>(num_points, false)};
     for (unsigned int n = 0; n < max_iters; ++n) {
-        std::cout << "n = " << n << std::endl;
-
         // 五点法
         Eigen::Matrix<TYPE, N, 9, Eigen::RowMajor> D;
         auto &&point_indices_set = generator_indices_set();
@@ -679,11 +677,12 @@ unsigned long slam::compute_essential_5pts(const vector<pair<const Vec3*, const 
         polynomials.row(9) = detE.coefficients();
 
         // 求广义逆 C = [A, B]  ->  [I A^-1 * B]
+//        auto p_lu = polynomials.topLeftCorner<10, 10>().partialPivLu();
+//        Mat10_10 p_inv = p_lu.inverse();
+//        Mat10_10 B;
+//        B.topLeftCorner<6, 10>() = -p_inv.topLeftCorner<6, 10>() * polynomials.bottomRightCorner<10, 10>();
         auto p_lu = polynomials.topLeftCorner<10, 10>().fullPivLu();
-        // Eigen::Matrix<TYPE, 10, 10> B = p_lu.solve(polynomials.bottomRightCorner<10, 10>());
-        Mat10_10 p_inv = p_lu.inverse();
-        Mat10_10 B;
-        B.topLeftCorner<6, 10>() = -p_inv.topLeftCorner<6, 10>() * polynomials.bottomRightCorner<10, 10>();
+        Mat10_10 B = p_lu.solve(-polynomials.bottomRightCorner<10, 10>());
         B.row(6) = Vec10::Unit(Polynomial::XX - Polynomial::XX).transpose();
         B.row(7) = Vec10::Unit(Polynomial::XY - Polynomial::XX).transpose();
         B.row(8) = Vec10::Unit(Polynomial::XZ - Polynomial::XX).transpose();
@@ -705,15 +704,9 @@ unsigned long slam::compute_essential_5pts(const vector<pair<const Vec3*, const 
                     if(w > TYPE(1e-10)) {
                         Vec9 e = nullspace * Eigen::Vector3d(xw / w, yw / w, zw / w).homogeneous();
                         results.emplace_back(e.data());
-                        std::cout << "i = " << i <<  ", lambda = " << xs[i].real();
-                        std::cout << ", x = " << xw / w << ", y = " << yw / w << ", z = " << zw / w << '\n';
-                        std::cout << "E = " << results.back() << std::endl;
-                        std::cout << "cs1 = " << results.back().determinant() << std::endl;
-                        std::cout << "cs2 = " << (results.back() * results.back().transpose() * results.back() - TYPE(0.5) * (results.back() * results.back().transpose()).trace() * results.back()).squaredNorm() << '\n';
                     }
                 }
             }
-            std::cout << "done" << std::endl;
         }
 
         // 遍历所有可能的结果
@@ -756,8 +749,6 @@ unsigned long slam::compute_essential_5pts(const vector<pair<const Vec3*, const 
                 }
                 swap(curr_index, best_index);
                 best_score = score;
-                std::cout << "num_inliers_vec[best_index] = " << num_inliers_vec[best_index] << '\n';
-                std::cout << "best_score = " << best_score << '\n';
             }
         }
     }
