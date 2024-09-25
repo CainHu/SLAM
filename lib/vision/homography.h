@@ -23,7 +23,7 @@ namespace slam {
      */
     unsigned long compute_homography_matrix(const vector<pair<const Vec3*, const Vec3*>> &match_pairs,
                                             Mat3_3 &H, vector<bool> &is_outliers,
-                                            TYPE sigma=TYPE(1), TYPE confidence=TYPE(0.99), unsigned int max_iters=1000);
+                                            TYPE sigma=TYPE(0.01), TYPE confidence=TYPE(0.99), unsigned int max_iters=1000);
 
     /*!
      * Faugeras 分解
@@ -63,7 +63,7 @@ namespace slam {
     bool reconstruct_from_homography(const vector<pair<const Vec3*, const Vec3*>> &match_pairs,
                                      Mat3_3 &R, Vec3 &t, Vec3 &n, vector<Vec3> &points, vector<bool> &is_outliers,
                                      bool (*decomp)(const Mat3_3&, vector<Mat3_3>&, vector<Vec3>&, vector<Vec3>&)=faugeras_decomposition,
-                                     TYPE sigma=TYPE(1), TYPE confidence=TYPE(0.99), unsigned int max_iters=1000);
+                                     TYPE sigma=TYPE(0.001), TYPE confidence=TYPE(0.99), unsigned int max_iters=1000);
 }
 
 #undef TYPE

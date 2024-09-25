@@ -201,7 +201,7 @@ linear_checker:
         }
 
         // SVD求解单应矩阵
-        Eigen::JacobiSVD<Mat8_9r> D_svd(D, Eigen::ComputeFullU | Eigen::ComputeFullV);
+        Eigen::JacobiSVD<Mat8_9r> D_svd(D, Eigen::ComputeFullV);
         Vec9 h = D_svd.matrixV().col(8);
         Eigen::Map<Mat3_3> H_raw(h.data());
         Mat3_3 H12 = Ti_inv * H_raw * Tj;
@@ -241,9 +241,8 @@ linear_checker:
                 is_outlier = true;
             }
 
-            if (is_outlier) {
-                is_outliers_vec[curr_index][k] = true;
-            } else {
+            is_outliers_vec[curr_index][k] = is_outlier;
+            if (!is_outlier) {
                 ++num_inliers_vec[curr_index];
                 score += th_score - e12 + th_score - e21;
             }
@@ -334,7 +333,7 @@ bool slam::zhang_decomposition(const Mat3_3 &H, vector<Mat3_3> &R_vec, vector<Ve
     constexpr static TYPE GAP = TYPE(1.00001);
 
     // 奇异值分解
-    Eigen::JacobiSVD<Mat3_3> H_svd(H, Eigen::ComputeFullU | Eigen::ComputeFullV);
+    Eigen::JacobiSVD<Mat3_3> H_svd(H, Eigen::ComputeFullV);
     Vec3 sigma = H_svd.singularValues();
     Mat3_3 H_regular = H / sigma(1);
 
