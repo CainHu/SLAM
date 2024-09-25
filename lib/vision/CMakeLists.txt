@@ -3,8 +3,9 @@ find_package (OpenMP REQUIRED)
 
 add_library(
         vision
-        homography.cpp
         triangulate.cpp
+        homography.cpp
+        essential.cpp
 )
 
 target_include_directories(vision PUBLIC

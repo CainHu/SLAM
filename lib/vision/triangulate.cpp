@@ -105,14 +105,14 @@ int slam::select_pose_by_triangulated(const vector<pair<const Vec3 *, const Vec3
         return -1;
     }
 
-    // 记录有多少组解使得70%的点都能三角化
-    unsigned long lim_inlier_points = 7 * max_inlier_points / 10;
-    unsigned long num_similar = 0;
-    for (int i = 0; i < num_poses; ++i) {
-        if (num_inliers_vec[i] > lim_inlier_points) {
-            ++num_similar;
-        }
-    }
+//    // 记录有多少组解使得70%的点都能三角化
+//    unsigned long lim_inlier_points = 7 * max_inlier_points / 10;
+//    unsigned long num_similar = 0;
+//    for (int i = 0; i < num_poses; ++i) {
+//        if (num_inliers_vec[i] > lim_inlier_points) {
+//            ++num_similar;
+//        }
+//    }
 
 //    // 不允许超过1组解使得70%的点都能三角化
 //    if (num_similar > 1) {

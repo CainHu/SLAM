@@ -9,8 +9,14 @@ find_package (OpenMP REQUIRED)
 add_subdirectory(lib)
 #add_subdirectory(modules)
 
-add_executable(SLAM homography_test.cpp)
-target_link_libraries(SLAM
+add_executable(homography homography_test.cpp)
+target_link_libraries(homography
+        vision
+        -lpthread
+        OpenMP::OpenMP_CXX)
+
+add_executable(essential essential_test.cpp)
+target_link_libraries(essential
         vision
         -lpthread
         OpenMP::OpenMP_CXX)

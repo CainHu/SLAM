@@ -18,6 +18,7 @@ namespace slam {
      * @param R 归一化平面 j 到 i 的旋转
      * @param t 归一化平面 j 指向 i 的位移在 i 上的投影
      * @param p 三角化得到的特征点在归一化平面 i 的投影
+     * @param sigma 重投影误差的方差
      * @param depth_min 特征点的最小深度
      * @return 特征点是否三角化成功
      */

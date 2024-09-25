@@ -24,6 +24,7 @@
 #include <unordered_set>
 #include <Eigen/Core>
 #include <Eigen/Geometry>
+#include <Eigen/Eigenvalues>
 
 #define SLAM_DATA_TYPE double
 
