@@ -1,4 +1,5 @@
 #include <iostream>
+#include <random>
 #include "common.h"
 #include "lib/vision/homography.h"
 
@@ -6,10 +7,13 @@
 using namespace slam;
 
 int main() {
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_real_distribution<TYPE> dist(-TYPE(0.5), TYPE(0.5));
     static vector<Vec3> points;
     for (unsigned i = 0; i < 10; ++i) {
         for (unsigned j = 0; j < 10; ++j) {
-            points.emplace_back(TYPE(i) - TYPE(4.5), TYPE(j) - TYPE(4.5), 10.);
+            points.emplace_back(TYPE(i) - TYPE(4.5) + dist(gen), TYPE(j) - TYPE(4.5) + dist(gen), TYPE(10));
         }
     }
 
