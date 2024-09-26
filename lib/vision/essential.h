@@ -12,9 +12,9 @@
 namespace slam {
     // TODO: 函数传入参数不应该多于4个
     /*!
-     * 八点最小二乘 + RANSAC 计算单应矩阵
+     * 八点最小二乘 + RANSAC 计算本质矩阵
      * @param match_pairs 匹配特征点在归一化平面的坐标
-     * @param E 本质单应矩阵
+     * @param E 本质矩阵
      * @param is_outliers 标记特征点是否为外点
      * @param sigma RANSAC 方差
      * @param confidence RANSAC 置信度
@@ -27,9 +27,9 @@ namespace slam {
 
     // TODO: 函数传入参数不应该多于4个
     /*!
-     * 八点最小二乘 + RANSAC 计算单应矩阵
+     * 七点最小二乘 + RANSAC 计算本质矩阵
      * @param match_pairs 匹配特征点在归一化平面的坐标
-     * @param E 本质单应矩阵
+     * @param E 本质矩阵
      * @param is_outliers 标记特征点是否为外点
      * @param sigma RANSAC 方差
      * @param confidence RANSAC 置信度
@@ -42,9 +42,9 @@ namespace slam {
 
     // TODO: 函数传入参数不应该多于4个
     /*!
-     * 八点最小二乘 + RANSAC 计算单应矩阵
+     * 五点最小二乘 + RANSAC 计算本质矩阵
      * @param match_pairs 匹配特征点在归一化平面的坐标
-     * @param E 本质单应矩阵
+     * @param E 本质矩阵
      * @param is_outliers 标记特征点是否为外点
      * @param sigma RANSAC 方差
      * @param confidence RANSAC 置信度
