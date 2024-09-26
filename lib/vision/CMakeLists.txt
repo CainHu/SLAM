@@ -6,6 +6,7 @@ add_library(
         triangulate.cpp
         homography.cpp
         essential.cpp
+        fundamental.cpp
 )
 
 target_include_directories(vision PUBLIC
